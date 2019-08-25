@@ -1,53 +1,35 @@
-version: '2' # version ของ docker compose
+version: '3.1' # version ของ docker compose
 services:
 
-  # Php สำหรับการสร้าง php container
   php:
-    build: ./docker-php # ชี้ไป path ของ Dockerfile เพื่อที่จะใช้ในการสร้าง container
-    working_dir: /var/www/html # directory ที่จะเป็นจัดที่เราทำงาน
+    build: ./docker-php 
+    working_dir: /var/www/html 
     volumes:
-      # เป็น volume ไฟล์ จากเครื่องเราไปยัง container จะเป็นการเชื่อมต่อกันแบบ
-      # ถ้าไฟล์ในเครื่องเราเปลี่ยนแปลงใน container ก็จะเปลี่ยนแปลงตามครับ
       - ./opencart:/var/www/html
     env_file: .env
 
-  # Web Server สำหรับการสร้าง nginx container
   nginx:
     build: ./docker-nginx
-    working_dir: /var/www/html # directory ที่จะเป็นจัดที่เราทำงาน
-    volumes_from:
-      - php # คือการ volume จาก php container นะครับ
+    working_dir: /var/www/html 
     ports:
-      - 8000:80 # port ที่เราต้องการจะใช้ระหว่าง {host}:{container} นะครับ
+      - 8000:80 
     volumes:
       - ./opencart:/var/www/html
+      - ./storage:/var/www/storage/
 
-  # database:
-  #   image: mariadb:10.2.16
-  #   volumes:
-  #     - ./mysql/data:/var/lib/mysql # ครับเช่นเคย volume database เข้ามาในเครื่องเราที่จะเก็บข้อมูลใน database ไว้
-  #   env_file: .env
-  #   ports:
-  #       - "3306:3306" # port ที่เราต้องการจะใช้ระหว่าง {host}:{container} นะครับ
+  database:
+    image: mariadb:10.2.16
+    volumes:
+      - ./mysql/data:/var/lib/mysql 
+    env_file: .env
+    ports:
+      - "3306:3306" 
 
-  # composer: # เป็น container สำหรับการรัน install package laravel ที่จะสั่งรันครั้งเดียวแล้วหยุดรัน container ไป
-  #   build: ./docker-php # ใช้ dockerfile เดียวกันกับ container php
-  #   working_dir: /var/www/opencart
-  #   volumes_from:
-  #     - php
-  #   command: >
-  #       bash -c "chmod -R 777 /var/www/opencart/
-  #         && composer install
-  #         && composer update" # คำสั่ง สำหรับ install package
-
-  # # Phpmyadmin (optional) อันนี้เพิ่มเติม หากว่าเราต้องการที่จะ explore database อันนี้ขี้เกียจอธิบายละ 5555
-  # adminer:
-  #   image: adminer
-  #   container_name: adminer
-  #   privileged: true
-  #   restart: always
-  #   ports:
-  #     - "3333:80"
-  #   env_file: .env
-  #   depends_on:
-  #       - database
+  adminer:
+    image: adminer
+    container_name: adminer
+    privileged: true
+    restart: always
+    env_file: .env
+    ports:
+      - "3333:8080"
