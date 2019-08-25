@@ -1,0 +1,12 @@
+{
+  "name": "opencart-docker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/codmunha/opencart-docker.git",
+  "author": "codemunha <codemunha@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "push": "git add . && git commit -m 'udpate' && git push"
+  }
+}
