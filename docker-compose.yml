@@ -21,6 +21,7 @@ services:
     image: mariadb:10.2.16
     volumes:
       - ./mysql/data:/var/lib/mysql 
+      - ./schema:/docker-entrypoint-initdb.d
     env_file: .env
     ports:
       - "3306:3306" 
