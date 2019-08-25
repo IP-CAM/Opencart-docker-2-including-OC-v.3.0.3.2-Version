@@ -5,7 +5,7 @@ services:
     build: ./docker-php 
     working_dir: /var/www/html 
     volumes:
-      - ./opencart:/var/www/html
+      - ./opencart:/var/www/html:rw
     env_file: .env
 
   nginx:
@@ -14,7 +14,7 @@ services:
     ports:
       - 8000:80 
     volumes:
-      - ./opencart:/var/www/html
+      - ./opencart:/var/www/html:rw
 
   database:
     image: mariadb:10.2.16
