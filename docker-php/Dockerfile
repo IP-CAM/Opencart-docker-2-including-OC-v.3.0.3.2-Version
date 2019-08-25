@@ -26,7 +26,6 @@ RUN docker-php-ext-install \
   soap \
   xsl \
   zip \
-  curl \
   xml
 
 RUN curl -sS https://getcomposer.org/installer | \
