@@ -27,7 +27,7 @@ services:
 
   adminer:
     image: adminer
-    container_name: adminer
+    container_name: docker_adminer
     privileged: true
     restart: always
     env_file: .env
