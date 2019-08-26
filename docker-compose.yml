@@ -23,7 +23,7 @@ services:
       - ./schema:/docker-entrypoint-initdb.d
     env_file: .env
     ports:
-      - "3306:3306" 
+      - "3307:3306" 
 
   adminer:
     image: adminer
@@ -32,4 +32,4 @@ services:
     restart: always
     env_file: .env
     ports:
-      - "3333:8080"
+      - "4444:8080"
