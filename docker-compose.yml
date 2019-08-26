@@ -23,7 +23,7 @@ services:
       - ./schema:/docker-entrypoint-initdb.d
     env_file: .env
     ports:
-      - "3307:3306" 
+      - "3306:3306" 
 
   adminer:
     image: adminer
